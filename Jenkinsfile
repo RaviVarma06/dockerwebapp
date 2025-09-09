@@ -19,7 +19,7 @@ pipeline {
 
         stage("Code") {
             steps {
-                git branch: 'master', url: 'https://github.com/RaviVarma06/dockerwebapp.git'
+                git "https://github.com/RaviVarma06/dockerwebapp.git"
             }
         }
 
@@ -36,7 +36,7 @@ pipeline {
         stage("Build") {
             steps {
                 sh 'mvn clean package'
-                sh 'cp -r target Docker-app'
+				sh 'cp -r target Docker-app'
             }
         }
         stage("OWASP") {
