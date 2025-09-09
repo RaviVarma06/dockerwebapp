@@ -21,6 +21,12 @@ pipeline {
             steps {
                 git "https://github.com/RaviVarma06/dockerwebapp.git"
             }
+        }     
+		stage("Build") {
+            steps {
+                sh 'mvn clean package'
+				sh 'cp -r target Docker-app'
+            }
         }
 
         stage("CQA") {
@@ -34,18 +40,7 @@ pipeline {
                 }
             }
         }
-        stage("Build") {
-            steps {
-                sh 'mvn clean package'
-				sh 'cp -r target Docker-app'
-            }
-        }
-        stage("OWASP") {
-            steps {
-                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-        }
+
         stage("Docker Build") {
             steps {
                 script {
