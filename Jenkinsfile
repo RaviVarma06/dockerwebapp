@@ -19,7 +19,7 @@ pipeline {
 
         stage("Code") {
             steps {
-                git branch: 'main', url: 'https://github.com/RaviVarma06/dockerwebapp.git'
+                git branch: 'master', url: 'https://github.com/RaviVarma06/dockerwebapp.git'
             }
         }
 
