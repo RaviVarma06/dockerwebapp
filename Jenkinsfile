@@ -45,7 +45,7 @@ pipeline {
                     sh "docker build -t ourproject/app Docker-app"
                     sh "docker build -t ourproject/db Docker-db"
                     sh "docker tag ourproject/app $ECR_REPO_APP"
-                    sh "docker tag ourproject/db $ECR_REPO_DB"
+                    sh "docker tag ourproject/db $ECR_REPO_DB" 
                 }
             }
         }
