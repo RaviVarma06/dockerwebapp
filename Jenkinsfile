@@ -30,7 +30,7 @@ pipeline {
                     sh '''$SCANNER_HOME/bin/sonar-scanner \
                         -Dsonar.projectName=docker-webapp \
                         -Dsonar.projectKey=docker-webapp
-						-Dsonar.java.binaries=target/classe
+						-Dsonar.java.binaries=**/target/classes
                        '''
                 }
             }
