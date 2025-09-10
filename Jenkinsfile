@@ -41,6 +41,13 @@ pipeline {
 				sh 'cp -r target Docker-app'
             }
         }
+		stage("OWASP") {
+            steps {
+                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
+
 
         stage("Docker Build") {
             steps {
