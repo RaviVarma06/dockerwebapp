@@ -27,10 +27,10 @@ pipeline {
         stage("CQA") {
             steps {
                 withSonarQubeEnv('mysonar') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner \
-                        -Dsonar.projectName=docker-webapp \
-                        -Dsonar.projectKey=docker-webapp
-						-Dsonar.java.binaries=**/target/classes
+                    sh '''mvn clean verify sonar:sonar \
+                        -Dsonar.projectKey=docker-webapp \
+                        -Dsonar.projectName='docker-webapp' \
+						-Dsonar.login=sqa_8cb3c8176fd5b4be58186b130a5f4dc76a147f5a
                        '''
                 }
             }
