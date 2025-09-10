@@ -23,13 +23,7 @@ pipeline {
                 git "https://github.com/RaviVarma06/dockerwebapp.git"
             }
         }     
-		stage("Build") {
-            steps {
-                sh 'mvn clean package'
-				sh 'cp -r target Docker-app'
-            }
-        }
-
+		
         stage("CQA") {
             steps {
                 withSonarQubeEnv('mysonar') {
@@ -39,6 +33,12 @@ pipeline {
 						-Dsonar.java.binaries=target/classe
                        '''
                 }
+            }
+        }
+		stage("Build") {
+            steps {
+                sh 'mvn clean package'
+				sh 'cp -r target Docker-app'
             }
         }
 
