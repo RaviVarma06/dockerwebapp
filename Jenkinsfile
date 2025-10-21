@@ -20,7 +20,7 @@ pipeline {
 
         stage("Code") {
             steps {
-                git branch: 'main', url: 'https://github.com/RaviVarma06/Zomato-Repo.git'
+                git 'https://github.com/RaviVarma06/Zomato-Repo.git'
             }
         }
 
