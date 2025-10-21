@@ -46,7 +46,7 @@ pipeline {
  		stage("Docker Build") {
             steps {
                 script {
-                    sh "docker build -t  ravi031/myzomato"
+                    sh "docker build -t  ravi031/myzomato ."
                     sh "docker tag ravi031/myzomato $ECR_REPO_APP"                
                 }
             }
