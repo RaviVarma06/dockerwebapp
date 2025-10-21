@@ -10,6 +10,7 @@ pipeline {
         SCANNER_HOME = tool 'mysonar'
         AWS_REGION = 'us-east-1' // Change to your AWS region
         ECR_REPO_APP = '585768179486.dkr.ecr.us-east-1.amazonaws.com/ravi031/myzomato'
+	    ECR_REPO_DB = '585768179486.dkr.ecr.us-east-1.amazonaws.com/ravi031/myzomato'
     }
     stages {
         stage("Clean") {
@@ -37,17 +38,19 @@ pipeline {
             }
         }
 
-        stage("Install dependencies") {
+        stage("Install Dependencies") {
             steps {
-                sh 'npm install'
+                sh 'mvn clean package'
             }
         }
 
  		stage("Docker Build") {
             steps {
                 script {
-                    sh "docker build -t  ravi031/myzomato ."
-                    sh "docker tag ravi031/myzomato $ECR_REPO_APP"                
+                    sh "docker build -t  ravi031/ourproject:app Docker-app"
+					sh "docker build -t  ravi031/ourproject:db Docker-db"
+                    sh "docker tag ravi031/myzomato $ECR_REPO_APP"  
+					sh "docker tag ravi031/myzomato $ECR_REPO_DB"
                 }
             }
         }
@@ -59,8 +62,9 @@ pipeline {
                         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
                         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
                         aws configure set default.region $AWS_REGION
-                        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO_APP
+                        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO_APP $ECR_REPO_DB
                         docker push $ECR_REPO_APP
+						docker push $ECR_REPO_DB
                     '''
                 }
             }
@@ -70,6 +74,7 @@ pipeline {
             steps {
                 sh 'trivy fs . > trivyfs.txt'
                 sh "trivy image $ECR_REPO_APP"
+				sh "trivy image $ECR_REPO_DB"
             }
          }
 
