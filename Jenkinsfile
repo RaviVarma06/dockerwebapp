@@ -42,7 +42,7 @@ pipeline {
             }
         }
 
- stage("Docker Build") {
+ 		stage("Docker Build") {
             steps {
                 script {
                     sh "docker build -t  ravi031/myzomato"
@@ -51,7 +51,7 @@ pipeline {
             }
         }
 
-  stage("Push to ECR") {
+  		stage("Push to ECR") {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'AWS-ECR-CREDS', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh '''
@@ -65,16 +65,18 @@ pipeline {
             }
         }
 
-   stage("TrivyScan") {
+  		 stage("TrivyScan") {
             steps {
                 sh 'trivy fs . > trivyfs.txt'
                 sh "trivy image $ECR_REPO_APP"
             }
-        }
+         }
 
-        stage("Deploy to container"){
+         stage("Deploy to container"){
             steps{
 	              sh 'docker run -d --name zomato -p 3000:3000 ravi031/myzomato'
 	          }
-      	}
+      	 }
     }
+}
+	
