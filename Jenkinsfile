@@ -4,6 +4,7 @@ pipeline {
     tools {
         jdk 'jdk17'
         nodejs 'node16'
+		maven 'mymaven'
     }    
  environment {
         SCANNER_HOME = tool 'mysonar'
