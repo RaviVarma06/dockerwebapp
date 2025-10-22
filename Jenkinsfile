@@ -82,7 +82,7 @@ pipeline {
 
         stage("Deploy to Container") {
             steps {
-                sh 'docker run -d --name zomato -p 3000:1234 ravi031/ourproject:app'
+                 sh 'docker-compose up -d'
             }
         }
     }
