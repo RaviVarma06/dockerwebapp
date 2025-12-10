@@ -49,8 +49,8 @@ pipeline {
         stage("Docker Build") {
             steps {
                 script {
-                    sh "DOCKER_BUILDKIT=1 docker build -t ravi031/ourproject:app -f Docker-app/Dockerfile ."
-                    sh "DOCKER_BUILDKIT=1 docker build -t ravi031/ourproject:db -f Docker-db/Dockerfile ."
+                    sh "docker build -t ravi031/ourproject:app -f Docker-app/Dockerfile ."
+                    sh "docker build -t ravi031/ourproject:db -f Docker-db/Dockerfile ."
                     sh "docker tag ravi031/ourproject:app $ECR_REPO_APP"
                     sh "docker tag ravi031/ourproject:db $ECR_REPO_DB"
                 }
