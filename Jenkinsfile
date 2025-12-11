@@ -34,7 +34,7 @@ pipeline {
                         mvn clean verify sonar:sonar \
                         -Dsonar.projectKey=docker-webapp \
                         -Dsonar.projectName='docker-webapp' \
-                        -Dsonar.login=sqa_c57711f61c5845601a8678702ba858b460cb3b1b
+                        -Dsonar.login=sqa_3fb3fedeb9cdea5113dea000cdfddd79c074fb4b
                     '''
                 }
             }
